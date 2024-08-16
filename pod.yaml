@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: saiyam
+  name: saiyam
+spec:
+  containers:
+  - image: nginx
+    name: saiyam
+    volumeMounts:
+    - name: demo
+      mountPath: /usr/share/nginx/html
+  initContainers:
+  - name: sam-init
+    image: busybox:1.28
+    command: ['sh', '-c',  'echo "Hello World!" | tee /tmp/index.html']
+    volumeMounts:
+    - name: demo
+      mountPath: "/tmp"
+  dnsPolicy: Default
+  volumes:
+  - name: demo
+    emptyDir: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
